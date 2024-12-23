@@ -33,9 +33,14 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public ModelAndView listCustomers(@PageableDefault(size = 3) Pageable pageable){
-        Page<Customer> customers = customerService.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("customer/list");
+    public ModelAndView listCustomers(@RequestParam("search") Optional<String> search, @PageableDefault(size = 3) Pageable pageable){
+        Page<Customer> customers;
+        if(search.isPresent()){
+            customers = customerService.findAllByName(pageable, search.get());
+        } else {
+            customers = customerService.findAll(pageable);
+        }
+        ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customers", customers);
         return modelAndView;
     }

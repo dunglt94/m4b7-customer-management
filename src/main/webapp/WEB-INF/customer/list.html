@@ -5,6 +5,12 @@
 </head>
 <body>
 <h3>Customers</h3>
+<div style="margin-bottom: 10px; margin-left: 10px">
+  <form th:action="@{/customers}" method="get">
+    <label><input type="text" name="search"></label>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+</div>
 <p>
   <a th:href="@{/customers/create}">
     Add new customer
