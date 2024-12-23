@@ -6,6 +6,9 @@ import com.example.customermanagementjpa.model.Province;
 import com.example.customermanagementjpa.service.ICustomerService;
 import com.example.customermanagementjpa.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +32,10 @@ public class CustomerController {
         return provinceService.findAll();
     }
 
-    @GetMapping
-    public ModelAndView listCustomer() {
+    @GetMapping()
+    public ModelAndView listCustomers(@PageableDefault(size = 3) Pageable pageable){
+        Page<Customer> customers = customerService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("customer/list");
-        Iterable<Customer> customers = customerService.findAll();
         modelAndView.addObject("customers", customers);
         return modelAndView;
     }
