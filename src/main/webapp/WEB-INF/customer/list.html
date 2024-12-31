@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout/layout :: head">
-  <title>List Customer</title>
+  <title th:text="#{title.list}">List Customer</title>
 </head>
 <body>
-<h3>Customers</h3>
+<h3 th:text="#{title.customers}">Customers</h3>
 <div style="margin-bottom: 10px; margin-left: 10px">
   <form th:action="@{/customers}" method="get">
     <label><input type="text" name="search"></label>
-    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="submit" class="btn btn-primary" th:text="#{button.search}" >Search</button>
   </form>
 </div>
+<div>
+  <span th:text="#{span.language}">Language</span>:
+  <a href="?lang=en" th:text="#{a.English}">English</a> | <a href="?lang=vi" th:text="#{a.Vietnamese}">Vietnamese</a>
+</div>
 <p>
-  <a th:href="@{/customers/create}">
-    Add new customer
-  </a>
+  <a th:href="@{/customers/create}" th:text="#{link.addCustomer}">Add new customer</a>
 </p>
 <p>
-  <a th:href="@{/provinces}">
-    Provinces
-  </a>
+  <a th:href="@{/provinces}" th:text="#{link.provinces}">Provinces</a>
 </p>
 <div class="notify">
   <div th:if="${message}">
@@ -27,15 +27,15 @@
   </div>
 </div>
 
-<table id = "list">
+<table id="list">
   <thead>
   <tr>
-    <th>STT</th>
-    <th>FirstName</th>
-    <th>LastName</th>
-    <th>Province</th>
-    <th>Update</th>
-    <th>Delete</th>
+    <th th:text="#{table.header.stt}">STT</th>
+    <th th:text="#{table.header.firstName}">First Name</th>
+    <th th:text="#{table.header.lastName}">Last Name</th>
+    <th th:text="#{table.header.province}">Province</th>
+    <th th:text="#{table.header.update}">Update</th>
+    <th th:text="#{table.header.delete}">Delete</th>
   </tr>
   </thead>
   <tbody>
@@ -44,17 +44,18 @@
     <td th:text="${c.firstName}"></td>
     <td th:text="${c.lastName}"></td>
     <td th:text="${c.getProvince().name}"></td>
-    <td><a th:href="@{/customers/update/{id}(id=${c.id})}">update</a></td>
-    <td><a th:href="@{/customers/delete/{id}(id=${c.id})}">delete</a></td>
+    <td><a th:href="@{/customers/update/{id}(id=${c.id})}" th:text="#{table.header.update}">update</a></td>
+    <td><a th:href="@{/customers/delete/{id}(id=${c.id})}" th:text="#{table.header.delete}">delete</a></td>
   </tr>
   </tbody>
 </table>
+<br>
 <div style="text-align: center">
-    <a class="btn btn-primary" th:if="${customers.hasPrevious()}"
-       th:href="@{/customers(page=${customers.number - 1})}">Previous</a>
-    <span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>
-    <a class="btn btn-primary" th:if="${customers.hasNext()}"
-       th:href="@{/customers(page=${customers.number + 1})}">Next</a>
+  <a class="btn btn-primary" th:if="${customers.hasPrevious()}"
+     th:href="@{/customers(page=${customers.number - 1})}" th:text="#{pagination.previous}">Previous</a>
+  <span th:text="${customers.number + 1}"></span> | <span th:text="${customers.totalPages}"></span>
+  <a class="btn btn-primary" th:if="${customers.hasNext()}"
+     th:href="@{/customers(page=${customers.number + 1})}" th:text="#{pagination.next}">Next</a>
 </div>
 <footer th:replace="/layout/layout :: footer"></footer>
 </body>
